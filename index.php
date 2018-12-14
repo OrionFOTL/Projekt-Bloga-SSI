@@ -6,6 +6,8 @@
 	<div class="wrapper">
 		<!-- logo oraz navbar -->
 		<?php include('includes/navbar.php') ?>
+		<!-- login/rejestracja -->
+		<?php include('includes/login.php') ?>
 		<!-- newsmob -->
 		<?php include('includes/newsmob.php') ?>
 		<div id="mainwrapper"> 	  

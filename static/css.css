@@ -137,7 +137,7 @@ font: 100 1em 'Open Sans', sans-serif;}
 #menu ul.menu > li.element:hover {background-color: black;}
 ul.menu > li.element:hover {background-color: #d0c28b; box-shadow: 0 0 10px 2px black;}
 
-#psu ul.menu .separator {display: none;}
+/* #psu ul.menu .separator {display: none;} */
 #psu li.platforms a {color: #0059d5;}
 
 /* imgs */
