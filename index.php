@@ -20,7 +20,7 @@
 			<div id="main">
 				<?php foreach ($posts as $post): ?>
 					<div class="newsitem">
-						<a href="single_post.php?post-slug=<?php echo $post['slug']; ?>">
+						<a href="single_post.php?post-slug=<?php echo $post['slug']; ?>">  <!-- TODO: obrazek tematu -->
 							<span class="obrazek poprawej"><img src="<?php echo BASE_URL . '/static/media/images/' . $post['image']; ?>" alt="IMG" /></span>
 						</a>
 						<a href="single_post.php?post-slug=<?php echo $post['slug']; ?>">
