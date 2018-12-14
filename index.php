@@ -21,7 +21,7 @@
 				<?php foreach ($posts as $post): ?>
 					<div class="newsitem">
 						<!-- obrazek tematu -->
-						<a href="tematy.php?topic=<?php echo $post['slug']; ?>">
+						<a href="tematy.php?topic=<?php echo $post['topic']['slug']; ?>">
 							<span class="obrazek poprawej"><img src="<?php echo BASE_URL . 'static/media/' . $post['topic']['slug']; ?>" alt="IMG" /></span>
 						</a>
 						<!-- Tytuł -->

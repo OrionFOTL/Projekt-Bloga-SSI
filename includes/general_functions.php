@@ -18,6 +18,7 @@ function getPublishedPosts() {
     }
 	return $final_posts;
 }
+//zwraca tablicę asoc. z id tematu, nazwą tematu, slugiem tematu dla posta
 function getPostTopic($post_id){
 	global $conn;
 	$sql = "SELECT * FROM topics WHERE id=
@@ -25,5 +26,57 @@ function getPostTopic($post_id){
 	$result = mysqli_query($conn, $sql);
     $topic = mysqli_fetch_assoc($result);
 	return $topic;
+}
+
+/* * * * * * * * * * * * * * * *
+* @param:  slug tematu
+* @return: tablica asoc. z wszystkim postami pod tematem
+* * * * * * * * * * * * * * * * */
+function getPublicPostsFromTopicSlug($topic_slug) {
+	global $conn;
+	$sql = "SELECT * FROM posts p WHERE p.id IN
+                (
+                SELECT pt.post_id FROM post_topic pt WHERE pt.topic_id IN
+                    (
+                    SELECT t.id FROM topics t WHERE t.slug ='$topic_slug'
+                    )
+                GROUP BY pt.post_id
+                )";
+	$result = mysqli_query($conn, $sql);
+    
+    //wrzuc posty do tablicy asoc.
+	$posts = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+    //dodaj pole z nazwą tematu
+	$final_posts = array();
+	foreach ($posts as $post) {
+		$post['topic'] = getPostTopic($post['id']); 
+		array_push($final_posts, $post);
+	}
+	return $final_posts;
+}
+/* * * * * * * * * * * * * * * *
+* @param: slug tematu
+* @return: nazwa tematu
+* * * * * * * * * * * * * * * * */
+function getTopicNameBySlug($topic_slug)
+{
+	global $conn;
+	$sql = "SELECT name FROM topics WHERE slug='$topic_slug'";
+	$result = mysqli_query($conn, $sql);
+	$topic = mysqli_fetch_assoc($result);
+	return $topic['name'];
+}
+/* * * * * * * * * * * * * * * *
+* @param: brak
+* @return: tablica asoc. z tematami
+* * * * * * * * * * * * * * * * */
+function getAllTopics() {
+	global $conn;
+	$sql = "SELECT * FROM topics";
+    $result = mysqli_query($conn, $sql);
+    
+    $topics = mysqli_fetch_all($result, MYSQLI_ASSOC);
+	return $topics;
 }
 ?>

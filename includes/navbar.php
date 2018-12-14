@@ -5,7 +5,7 @@
 			<ul class="menu">
 				<li class="element"><a href="index.html">Home</a></li>
 				<li class="separator"><img src="static/media/menu_oddzielacz3.gif" alt="::"></li>
-				<li class="element"><a href="blog.html">Artykuły</a></li>
+				<li class="element"><a href="tematy.php">Kategorie</a></li>
 				<li class="separator"><img src="static/media/menu_oddzielacz3.gif" alt="::"></li>
 				<li class="element"><a href="links.html">Linki</a></li>
 				<li class="separator"><img src="static/media/menu_oddzielacz3.gif" alt="::"></li>
