@@ -79,4 +79,20 @@ function getAllTopics() {
     $topics = mysqli_fetch_all($result, MYSQLI_ASSOC);
 	return $topics;
 }
+/* * * * * * * * * * * * * * * *
+* @param: slug posta
+* @return: tablica asoc. z danymi posta
+* * * * * * * * * * * * * * * * */
+function getPost($slug){
+	global $conn;
+	
+	$sql = "SELECT * FROM posts WHERE slug='$slug' AND published=true";
+	$result = mysqli_query($conn, $sql);
+
+	$post = mysqli_fetch_assoc($result);
+	if ($post) {
+		$post['topic'] = getPostTopic($post['id']);
+	}
+	return $post;
+}
 ?>
