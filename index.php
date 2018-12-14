@@ -20,12 +20,15 @@
 			<div id="main">
 				<?php foreach ($posts as $post): ?>
 					<div class="newsitem">
-						<a href="single_post.php?post-slug=<?php echo $post['slug']; ?>">  <!-- TODO: obrazek tematu -->
-							<span class="obrazek poprawej"><img src="<?php echo BASE_URL . '/static/media/images/' . $post['image']; ?>" alt="IMG" /></span>
+						<!-- obrazek tematu -->
+						<a href="tematy.php?topic=<?php echo $post['slug']; ?>">
+							<span class="obrazek poprawej"><img src="<?php echo BASE_URL . 'static/media/' . $post['topic']['slug']; ?>" alt="IMG" /></span>
 						</a>
+						<!-- Tytuł -->
 						<a href="single_post.php?post-slug=<?php echo $post['slug']; ?>">
 							<h1><?php echo $post['title'] ?></h1>
 						</a>
+						<!-- Krótki opis i link -->
 						<p>
 							<?php echo $post['short'] ?>
 							<a href="single_post.php?post-slug=<?php echo $post['slug']; ?>">Czytaj dalej...</a>

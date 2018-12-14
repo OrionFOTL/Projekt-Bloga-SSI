@@ -4,7 +4,7 @@
 * * * * * * * * * * * * * * */
 function getPublishedPosts() {
 	global $conn;
-	$sql = "SELECT * FROM posts WHERE published=true";
+	$sql = "SELECT * FROM posts WHERE published=true ORDER BY created_at desc";
 	$result = mysqli_query($conn, $sql);
 
     //$posts = tablica asocjacyjna
@@ -16,7 +16,6 @@ function getPublishedPosts() {
 		$post['topic'] = getPostTopic($post['id']); 
 		array_push($final_posts, $post);
     }
-    var_dump($final_posts);
 	return $final_posts;
 }
 function getPostTopic($post_id){
@@ -25,7 +24,6 @@ function getPostTopic($post_id){
 			(SELECT topic_id FROM post_topic WHERE post_id=$post_id)";
 	$result = mysqli_query($conn, $sql);
     $topic = mysqli_fetch_assoc($result);
-    var_dump($topic);
 	return $topic;
 }
 ?>
