@@ -182,22 +182,27 @@ table.specyfikacje colgroup col.komponent {background-color: #e7e2be; border-rig
 table.zasilacze {border: 2px solid black; border-collapse: collapse; margin: 10px auto; text-align: center;}
 table.zasilacze td {border: 1px dotted grey;}
 table.zasilacze th {
-background: linear-gradient(#8a5a1b, #653900);
-color: white;
-border: 1px solid black;
-text-align: center;}
+   background: linear-gradient(#8a5a1b, #653900);
+   color: white;
+   border: 1px solid black;
+   text-align: center;
+}
 table.zasilacze colgroup col.seria {background-color: #e7e2be; border-right: 2px solid black;}
 table.zasilacze colgroup col.platforma {background-color: #efdecf;}
 
-
-
-
-
-
-
-
-
-
-
-
-
+/* styl dla wpisów na liście */
+div#main div.newsitem {
+   position: relative;
+   margin-bottom: 15px;
+   overflow: hidden;
+   padding: 10px 10px 30px;
+   width: 95%;
+   background-color: white;
+   box-shadow: 2px 2px 2px gray;
+}
+div.newsitem div.newsfooter {
+   position: absolute;
+   bottom: 0;
+   left: 0;
+   margin: 0 5px 5px;
+}
