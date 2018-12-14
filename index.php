@@ -1,4 +1,5 @@
-﻿<?php require_once('includes/header.php') ?>
+﻿<?php require_once('config.php') ?>
+<?php require_once('includes/header.php') ?>
 	<title>Blog o sprzęcie</title>
 </head>
 
