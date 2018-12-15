@@ -5,7 +5,7 @@
                         <li class="element">Witaj <?php echo $_SESSION['user']['username'] ?>!</li>
                         <li class="separator"><img src="static/media/menu_oddzielacz2.gif" alt="::"></li>
                         <?php if ($_SESSION['user']['role'] == 'Admin'): ?>
-                            <li class="element"><a href="panel.php">Panel administracyjny</a></li>
+                            <li class="element"><a href="admin/panel.php">Panel administracyjny</a></li>
                             <li class="separator"><img src="static/media/menu_oddzielacz2.gif" alt="::"></li>
                         <?php endif ?>
                         <li class="element"><a href="logout.php">Wyloguj</a></li>
