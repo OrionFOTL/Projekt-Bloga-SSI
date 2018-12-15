@@ -50,12 +50,10 @@
 			// przejdz do panelu admina jesli jest adminem
 			if ( in_array($_SESSION['user']['role'], ["Admin", "Autor"])) {
 				$_SESSION['message'] = "Zalogowano";
-				
 				header('location: ' . BASE_URL . 'admin/panel.php');
 				exit(0);
 			} else {
 				$_SESSION['message'] = "Zalogowano";
-				// redirect to public area
 				header('location: index.php');				
 				exit(0);
 			}
