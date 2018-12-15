@@ -206,3 +206,5 @@ div.newsitem div.newsfooter {
    left: 0;
    margin: 0 5px 5px;
 }
+/* error */
+li.error {color: red;}
