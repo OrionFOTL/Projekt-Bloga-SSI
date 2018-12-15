@@ -1,6 +1,7 @@
 <!-- przygotowanie, konfiguracja -->
 <?php require_once( '../config.php') ?>
 <?php require_once( ROOT_PATH . '/admin/includes/admin_functions.php') ?>
+<?php require_once( ROOT_PATH . '/includes/auth.php') ?>
 
 <!-- layout -->
 <?php require_once(ROOT_PATH . '/includes/header.php') ?>

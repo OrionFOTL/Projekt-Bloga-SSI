@@ -54,7 +54,7 @@
 				exit(0);
 			} else {
 				$_SESSION['message'] = "Zalogowano";
-				header('location: index.php');				
+				header('location: ' . BASE_URL . 'index.php');				
 				exit(0);
 			}
 		}
@@ -90,7 +90,7 @@
 					exit(0);
 				} else {
 					$_SESSION['message'] = "Zalogowano";
-					header('location: index.php');				
+					header('location: ' . BASE_URL . 'index.php');				
 					exit(0);
 				}
 			} else {
