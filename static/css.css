@@ -221,3 +221,22 @@ div.newsitem div.newsfooter {
 }
 /* error */
 li.error {color: red;}
+
+/* form */
+form.reg input, form.reg select {
+   padding: 12px 20px;
+   margin: 8px 0;
+   display: block;
+   border: 1px solid #ccc;
+   border-radius: 4px;
+   box-sizing: border-box;
+ }
+ form.reg button[type=submit] {
+   background-color: #4CAF50;
+   color: white;
+   padding: 14px 20px;
+   margin: 8px 0;
+   border: none;
+   border-radius: 4px;
+   cursor: pointer;
+ }

@@ -17,7 +17,7 @@
 		<?php include(ROOT_PATH . '/includes/newsmob.php') ?>
 		<div id="mainwrapper"> 	  
 			<div id="main">
-                <form method="post" action="register.php" >
+                <form class="reg" method="post" action="register.php" >
                     <h1>Rejestracja</h1>
                     <!-- miejsce na błędy -->
                     <?php if (count($regerrors) > 0) : ?>

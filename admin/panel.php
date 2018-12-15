@@ -28,7 +28,7 @@
                     <a href="panel.php?akcja=users">
                         <h1>Zarządzanie użytkownikami</h1>
                     </a>
-                    <p>Ileś tam zarejestrowanych użytkowników</p>
+                    <p><?php echo getNumberofUsers() ?> zarejestrowanych użytkowników</p>
                 </div>
                 <?php if (isset($_GET['akcja'])): ?>
                     <?php if ($_GET['akcja'] == "users") include('includes/users.php') ?>

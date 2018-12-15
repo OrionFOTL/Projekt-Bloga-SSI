@@ -56,6 +56,16 @@ function getAllUsers() {
     $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
 	return $users;
 }
+//weź liczbe użytkowników
+function getNumberofUsers() {
+	global $conn;
+	$sql = "SELECT COUNT(*) FROM users";
+    $result = mysqli_query($conn, $sql);
+    
+    $query = mysqli_fetch_all($result, MYSQLI_NUM);
+    $number = intval($query[0][0]);
+	return $number;
+}
 //weż wszystkie role do tablicy
 function getAllRoles() {
     global $conn;

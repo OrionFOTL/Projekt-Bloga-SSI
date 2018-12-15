@@ -37,7 +37,7 @@
     </table>
 
     <?php if (isset($_GET['add'])): ?>
-        <form method="post" action="panel.php?akcja=users&add=1" >
+        <form class="reg" method="post" action="panel.php?akcja=users&add=1" >
             <h3>Dodaj użytkownika</h3>
             <!-- Miejsce na błędy -->
             <?php if (count($regerrors) > 0) : ?>
@@ -60,7 +60,7 @@
             <button type="submit" class="" name="admin_register">Zarejestruj</button>
         </form>
     <?php elseif (isset($_GET['edit'])): ?>
-        <form method="post" action="panel.php?akcja=users&add=1" >
+        <form class="reg" method="post" action="panel.php?akcja=users&add=1" >
             <h3>Dodaj użytkownika</h3>
             <!-- Miejsce na błędy -->
             <?php if (count($regerrors) > 0) : ?>
