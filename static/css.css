@@ -170,25 +170,38 @@ font: 400 0.8em 'Open Sans', sans-serif;}
 #rightmob img {vertical-align: bottom;}
 
 /* spectable */
-table.specyfikacje {border: 2px solid black; border-collapse: collapse; margin: 10px auto;}
-table.specyfikacje td {border: 1px dotted grey;}
-table.specyfikacje th {
+table.spectable {border: 2px solid black; border-collapse: collapse; margin: 10px auto;}
+table.spectable td {border: 1px dotted grey;}
+table.spectable th {
 background: linear-gradient(#8a5a1b, #653900);
 color: white;
 border: 2px solid black;
 text-align: center;}
-table.specyfikacje colgroup col.komponent {background-color: #e7e2be; border-right: 2px solid black;}
+table.spectable colgroup col.komponent {background-color: #e7e2be; border-right: 2px solid black;}
 
-table.zasilacze {border: 2px solid black; border-collapse: collapse; margin: 10px auto; text-align: center;}
-table.zasilacze td {border: 1px dotted grey;}
-table.zasilacze th {
-   background: linear-gradient(#8a5a1b, #653900);
-   color: white;
-   border: 1px solid black;
-   text-align: center;
-}
-table.zasilacze colgroup col.seria {background-color: #e7e2be; border-right: 2px solid black;}
-table.zasilacze colgroup col.platforma {background-color: #efdecf;}
+table.psutable {border: 2px solid black; border-collapse: collapse; margin: 10px auto; text-align: center;}
+table.psutable td {border: 1px solid grey; padding: 10px 5px;}
+table.psutable th {
+background: #653900;
+color: white;
+border: 1px solid black;
+text-align: center;
+padding: 10px 5px;
+font-size: 15px;}
+table.psutable em {font-size: smaller;}
+table.psutable colgroup col.series {background-color: #e7e2be; border-right: 1px solid black;}
+table.psutable colgroup col.platform, table.psutable colgroup col.oem {background-color: #F5EFDA;}
+table.psutable colgroup col.notes {max-width: 30%;}
+table.psutable colgroup col.platseries {background-color: #e7e2be; border-right: 1px solid black;}
+table.psutable td.discontinued {background: url(../images/discontinued.png) repeat center bottom;}
+table.psutable td {position: relative; background-clip: padding-box;}
+table.psutable td p {margin: 0;}
+table.psutable td > p + p {position: absolute; right: 0px; bottom: 0px; font-size: smaller;}
+
+/* w panelu admin */
+table.psutable a.action.add {color: green;}
+table.psutable a.action.edit {color: yellowgreen;}
+table.psutable a.action.delete {color: red;}
 
 /* styl dla wpisów na liście */
 div#main div.newsitem {
