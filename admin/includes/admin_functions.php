@@ -46,8 +46,8 @@ if (isset($_POST['admin_register'])) {
         exit(0);
     }
 }
- //Edycja użytkownika
- if (isset($_POST['admin_edit'])) {
+//Edycja użytkownika
+if (isset($_POST['admin_edit'])) {
     // wszystkie wpisane wartosci escape'owane dla bezpieczeństwa
     $login = esc($_POST['login']);
     $email = esc($_POST['email']);
@@ -121,4 +121,85 @@ function getAllRoles() {
         $roles[] = $query['role'];
     }
     return $roles;
+}
+
+/**********
+ * Zarzadzanie postami
+ ***********/
+
+$posterrors = Array();
+
+function getAllPosts() {
+	global $conn;
+	$sql = "SELECT * FROM posts";
+    $result = mysqli_query($conn, $sql);
+    
+    $posts = mysqli_fetch_all($result, MYSQLI_ASSOC);
+	return $posts;
+}
+function getAllTopics() {
+    global $conn;
+    $topics = Array();
+	$sql = "SELECT DISTINCT name FROM topics";
+    $result = mysqli_query($conn, $sql);
+    
+    while($query = $result->fetch_assoc()){
+        $topics[] = $query['name'];
+    }
+    return $topics;
+}
+//weź liczbe postow
+function getNumberofPosts() {
+	global $conn;
+	$sql = "SELECT COUNT(*) FROM posts";
+    $result = mysqli_query($conn, $sql);
+    
+    $query = mysqli_fetch_all($result, MYSQLI_NUM);
+    $number = intval($query[0][0]);
+	return $number;
+}
+if (isset($_POST['add_post'])) {
+    $title = "";
+    $slug = "";
+    $short = "";
+    $postbody = "";
+    $published = 0;
+
+    $title = esc($_POST['title']);
+    $slug = esc($_POST['slug']);
+    $short = esc($_POST['short']);
+    $postbody = esc($_POST['postbody']);
+    $topic = esc($_POST['topic']);
+    if (isset($_POST['published'])) {
+        $published = intval(esc($_POST['published']));
+    }
+
+    $editingUserId = intval($_SESSION['user']['id']);
+
+    // walidacja formularza
+    if (empty($title)) { array_push($posterrors, "Nie podano tytułu"); }
+    if (empty($slug)) { array_push($posterrors, "Nie podano sluga"); }
+    if (empty($short)) { array_push($posterrors, "Nie podano krótkiego opisu"); }
+    if (empty($postbody)) { array_push($posterrors, "Nie wpisano treści"); }
+    if (!in_array($topic, getAllTopics() )) { array_push($posterrors, "Temat nie istnieje");}
+
+    // czy nie był już opublkoiwany
+    $sql = "SELECT * FROM topics WHERE slug='$slug'";
+
+    $result = mysqli_query($conn, $sql);
+    $postedBefore = mysqli_fetch_assoc($result);
+
+    if ($postedBefore) {
+        array_push($posterrors, "Post o takim slugu już istnieje");
+    }
+    
+    //publikowanie do bazy
+    if (count($posterrors) == 0) {
+        $query = "INSERT INTO posts (user_id, title, slug, short, body, published, created_at, updated_at) 
+                  VALUES($editingUserId, '$title', '$slug', '$short', '$postbody', $published, now(), now())";
+        mysqli_query($conn, $query);
+
+        header('location: panel.php?akcja=posts&add=1');
+        exit(0);
+    }
 }

@@ -38,17 +38,17 @@
                     <a href="panel.php?akcja=posts">
                         <h1>Zarządzanie postami</h1>
                     </a>
-                    <p>Ileś tam napisanych postów</p>
+                    <p><?php echo getNumberofPosts() ?> napisanych postów</p>
                 </div>
                 <?php if (isset($_GET['akcja'])): ?>
-                    <?php if ($_GET['akcja'] == "posts") echo "witaj" ?>
+                    <?php if ($_GET['akcja'] == "posts") include('includes/posts.php') ?>
                 <?php endif ?>
                 <!-- Komentarze -->
                 <div class="newsitem">
                     <a href="panel.php?akcja=comments">
                         <h1>Zarządzanie komentarzami</h1>
                     </a>
-                    <p>Ileś tam napisanych komentarzy</p>
+                    <p> napisanych komentarzy</p>
                 </div>
                 <?php if (isset($_GET['akcja'])): ?>
                     <?php if ($_GET['akcja'] == "comments") echo "witaj" ?>
