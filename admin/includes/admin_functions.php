@@ -4,7 +4,7 @@
  * Zarzadzanie użytkownikami
  ***********/
 
- //Dodawanie nowego
+//Dodawanie nowego
 if (isset($_POST['admin_register'])) {
     // wszystkie wpisane wartosci escape'owane dla bezpieczeństwa
     $login = esc($_POST['login']);
@@ -46,7 +46,35 @@ if (isset($_POST['admin_register'])) {
         exit(0);
     }
 }
-//escape
+ //Edycja użytkownika
+ if (isset($_POST['admin_edit'])) {
+    // wszystkie wpisane wartosci escape'owane dla bezpieczeństwa
+    $login = esc($_POST['login']);
+    $email = esc($_POST['email']);
+    $password_1 = esc($_POST['password_1']);
+    $password_2 = esc($_POST['password_2']);
+    $role = $_POST['role'];
+    $id = $_GET['edit'];
+
+    // walidacja formularza
+    if (empty($login)) { array_push($regerrors, "Nie podano loginu"); }
+    if (empty($email)) { array_push($regerrors, "Nie podano emaila"); }
+    if (empty($password_1)) { array_push($regerrors, "Nie podano hasła"); }
+    if ($password_1 != $password_2) { array_push($regerrors, "Hasła do siebie nie pasują");}
+    if (!in_array($role, getAllRoles() )) { array_push($regerrors, "Rola nie istnieje");}
+
+    //faktyczna rejestracja
+    if (count($regerrors) == 0) {
+        $password = password_hash($password_1, PASSWORD_DEFAULT);  //szyfrowanie hasla
+        $query = "UPDATE users SET username='$login', email='$email', password='$password',
+                  role='$role', updated_at=now() WHERE id=$id";
+        mysqli_query($conn, $query);
+
+        header('location: panel.php?akcja=users&edit=' . $id);
+        exit(0);
+    }
+}
+
 //weź wszystkich użytkowników do tablicy asocjacyjnej
 function getAllUsers() {
 	global $conn;
@@ -55,6 +83,14 @@ function getAllUsers() {
     
     $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
 	return $users;
+}
+// weź edytowanego użytkownika
+function getEditedUser($id) {
+	global $conn;
+	$sql = "SELECT * FROM users WHERE id=$id";
+    $result = mysqli_query($conn, $sql);
+    $user = mysqli_fetch_assoc($result);
+	return $user;
 }
 //weź liczbe użytkowników
 function getNumberofUsers() {

@@ -36,6 +36,7 @@
         </tbody>
     </table>
 
+    <!-- dodawanie -->
     <?php if (isset($_GET['add'])): ?>
         <form class="reg" method="post" action="panel.php?akcja=users&add=1" >
             <h3>Dodaj użytkownika</h3>
@@ -59,28 +60,33 @@
 			</select>
             <button type="submit" class="" name="admin_register">Zarejestruj</button>
         </form>
+
+    <!-- edytowanie -->
     <?php elseif (isset($_GET['edit'])): ?>
-        <form class="reg" method="post" action="panel.php?akcja=users&add=1" >
-            <h3>Dodaj użytkownika</h3>
+        <?php $user=getEditedUser($_GET['edit']); ?> 
+        <form class="reg" method="post" action="panel.php?akcja=users&edit=<?php echo $user['id'] ?>">
+            <h3>Edytuj użytkownika <?php echo $user['username'] ?></h3>
             <!-- Miejsce na błędy -->
             <?php if (count($regerrors) > 0) : ?>
-                <h2>Błąd rejestracji!</h2>
+                <h2>Błąd edycji!</h2>
                 <?php foreach ($regerrors as $error) : ?>
                     <p><?php echo $error ?></p>
                 <?php endforeach ?>
             <?php endif ?>
             <!-- pola do wypełnienia -->
-            <input type="text" name="login" value="<?php echo $login; ?>" placeholder="Login" required>
-            <input type="email" name="email" value="<?php echo $email ?>" placeholder="Email" required>
+            <input type="text" name="login" value="<?php echo $user['username']; ?>" placeholder="Login" required>
+            <input type="email" name="email" value="<?php echo $user['email'] ?>" placeholder="Email" required>
             <input type="password" name="password_1" placeholder="Hasło" required>
             <input type="password" name="password_2" placeholder="Powtórz hasło" required>
             <select name="role">
                 <option value="" selected disabled>Wybierz rolę</option>
                 <?php foreach ($roles as $role): ?>
-                    <option value="<?php echo $role; ?>"><?php echo $role; ?></option>
+                    <option value="<?php echo $role; ?>" <?php if($user['role'] == $role) echo "selected" ?>>
+                        <?php echo $role; ?>
+                    </option>
                 <?php endforeach ?>
 			</select>
-            <button type="submit" class="" name="admin_register">Zarejestruj</button>
+            <button type="submit" class="" name="admin_edit">Zapisz zmiany</button>
         </form>
     <?php endif ?>
 </div>
