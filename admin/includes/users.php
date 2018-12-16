@@ -1,6 +1,7 @@
 <?php
     $users = getAllUsers();
     $roles = getAllRoles();
+    if (isset($_GET['delete'])) deleteUser($_GET['delete']);
 ?>
 
 <div>

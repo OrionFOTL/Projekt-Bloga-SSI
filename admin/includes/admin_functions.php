@@ -74,6 +74,14 @@ if (isset($_POST['admin_register'])) {
         exit(0);
     }
 }
+ //Usuwanie użytkownika
+function deleteUser($id) {
+	global $conn;
+    $sql = "DELETE FROM users WHERE id=$id";
+    mysqli_query($conn, $sql);
+    header('location: panel.php?akcja=users');
+    exit(0);
+}
 
 //weź wszystkich użytkowników do tablicy asocjacyjnej
 function getAllUsers() {
