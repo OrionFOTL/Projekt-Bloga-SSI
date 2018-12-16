@@ -64,7 +64,7 @@
             <select name="topic" required>
                 <option value="null" selected disabled>Wybierz temat</option>
                 <?php foreach ($topics as $topic): ?>
-                    <option value="<?php echo $topic; ?>"><?php echo $topic; ?></option>
+                    <option value="<?php echo $topic['id']; ?>"><?php echo $topic['name']; ?></option>
                 <?php endforeach ?>
             </select>
             <input type="checkbox" name="published" value="1" checked>Opublikowany?<br/>

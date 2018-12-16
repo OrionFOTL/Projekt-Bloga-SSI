@@ -140,13 +140,22 @@ function getAllPosts() {
 function getAllTopics() {
     global $conn;
     $topics = Array();
-	$sql = "SELECT DISTINCT name FROM topics";
+	$sql = "SELECT * FROM topics";
+    $result = mysqli_query($conn, $sql);
+    
+    $topics = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    return $topics;
+}
+function getTopicIds() {
+    global $conn;
+    $topic_names = Array();
+	$sql = "SELECT id FROM topics";
     $result = mysqli_query($conn, $sql);
     
     while($query = $result->fetch_assoc()){
-        $topics[] = $query['name'];
+        $topic_names[] = $query['id'];
     }
-    return $topics;
+    return $topic_names;
 }
 //weź liczbe postow
 function getNumberofPosts() {
@@ -181,7 +190,7 @@ if (isset($_POST['add_post'])) {
     if (empty($slug)) { array_push($posterrors, "Nie podano sluga"); }
     if (empty($short)) { array_push($posterrors, "Nie podano krótkiego opisu"); }
     if (empty($postbody)) { array_push($posterrors, "Nie wpisano treści"); }
-    if (!in_array($topic, getAllTopics() )) { array_push($posterrors, "Temat nie istnieje");}
+    if (!in_array($topic, getTopicIds() )) { array_push($posterrors, "Temat nie istnieje");}
 
     // czy nie był już opublkoiwany
     $sql = "SELECT * FROM topics WHERE slug='$slug'";
@@ -197,6 +206,10 @@ if (isset($_POST['add_post'])) {
     if (count($posterrors) == 0) {
         $query = "INSERT INTO posts (user_id, title, slug, short, body, published, created_at, updated_at) 
                   VALUES($editingUserId, '$title', '$slug', '$short', '$postbody', $published, now(), now())";
+        mysqli_query($conn, $query);
+        $inserted_post_id = mysqli_insert_id($conn);
+        $query = "INSERT INTO post_topic (post_id, topic_id) 
+                  VALUES($inserted_post_id, $topic)";
         mysqli_query($conn, $query);
 
         header('location: panel.php?akcja=posts&add=1');
