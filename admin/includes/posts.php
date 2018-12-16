@@ -1,6 +1,7 @@
 <?php
     $posts = getAllPosts();
     $topics = getAllTopics();
+    if (isset($_GET['delete'])) deletePost($_GET['delete']);
 ?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.8.0/ckeditor.js"></script>
 
@@ -57,10 +58,10 @@
                 <?php endforeach ?>
             <?php endif ?>
             <!-- pola do wypełnienia -->
-            <input type="text" name="title" placeholder="Tytuł" >
+            <input type="text" name="title" placeholder="Tytuł" required>
             <input type="text" name="slug" placeholder="slug-posta" required>
             <input type="short" name="short" placeholder="Krótki opis" required>
-            <textarea name="postbody" id="postbody" cols="30" rows="10"></textarea>
+            <textarea name="postbody" id="postbody" cols="30" rows="10" required></textarea>
             <select name="topic" required>
                 <option value="null" selected disabled>Wybierz temat</option>
                 <?php foreach ($topics as $topic): ?>
@@ -73,30 +74,29 @@
 
     <!-- edytowanie -->
     <?php elseif (isset($_GET['edit'])): ?>
-        <?php $user=getEditedUser($_GET['edit']); ?> 
-        <form class="reg" method="post" action="panel.php?akcja=users&edit=<?php echo $user['id'] ?>">
-            <h3>Edytuj użytkownika <?php echo $user['username'] ?></h3>
+    <?php $post=getEditedPost($_GET['edit']); ?>
+    <form class="reg" method="post" action="panel.php?akcja=posts&edit=<?php echo $post['id'] ?>">
+            <h3>Edytuj post <?php echo $post['title'] ?></h3>
             <!-- Miejsce na błędy -->
-            <?php if (count($regerrors) > 0) : ?>
-                <h2>Błąd edycji!</h2>
-                <?php foreach ($regerrors as $error) : ?>
+            <?php if (count($posterrors) > 0) : ?>
+                <h2>Błąd edytowania!</h2>
+                <?php foreach ($posterrors as $error) : ?>
                     <p><?php echo $error ?></p>
                 <?php endforeach ?>
             <?php endif ?>
             <!-- pola do wypełnienia -->
-            <input type="text" name="login" value="<?php echo $user['username']; ?>" placeholder="Login" required>
-            <input type="email" name="email" value="<?php echo $user['email'] ?>" placeholder="Email" required>
-            <input type="password" name="password_1" placeholder="Hasło" required>
-            <input type="password" name="password_2" placeholder="Powtórz hasło" required>
-            <select name="role">
-                <option value="" selected disabled>Wybierz rolę</option>
-                <?php foreach ($roles as $role): ?>
-                    <option value="<?php echo $role; ?>" <?php if($user['role'] == $role) echo "selected" ?>>
-                        <?php echo $role; ?>
-                    </option>
+            <input type="text" name="title" placeholder="Tytuł" required value="<?php echo $post['title'] ?>">
+            <input type="text" name="slug" placeholder="slug-posta" required value="<?php echo $post['slug'] ?>">
+            <input type="short" name="short" placeholder="Krótki opis" required value="<?php echo $post['short'] ?>">
+            <textarea name="postbody" id="postbody" cols="30" rows="10" required><?php echo $post['body'] ?></textarea>
+            <select name="topic" required>
+                <option value="null" selected disabled>Wybierz temat</option>
+                <?php foreach ($topics as $topic): ?>
+                    <option value="<?php echo $topic['id']; ?>"><?php echo $topic['name']; ?></option>
                 <?php endforeach ?>
-			</select>
-            <button type="submit" class="" name="admin_edit">Zapisz zmiany</button>
+            </select>
+            <input type="checkbox" name="published" value="1" checked>Opublikowany?<br/>
+            <button type="submit" class="" name="add_post">Zapisz</button>
         </form>
     <?php endif ?>
 </div>

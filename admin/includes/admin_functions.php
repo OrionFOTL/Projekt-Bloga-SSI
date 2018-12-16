@@ -167,6 +167,7 @@ function getNumberofPosts() {
     $number = intval($query[0][0]);
 	return $number;
 }
+//dodawanie postow
 if (isset($_POST['add_post'])) {
     $title = "";
     $slug = "";
@@ -215,4 +216,79 @@ if (isset($_POST['add_post'])) {
         header('location: panel.php?akcja=posts&add=1');
         exit(0);
     }
+}
+// edytowanie postow
+if (isset($_POST['add_post'])) {
+    $title = "";
+    $slug = "";
+    $short = "";
+    $postbody = "";
+    $published = 0;
+
+    $title = esc($_POST['title']);
+    $slug = esc($_POST['slug']);
+    $short = esc($_POST['short']);
+    $postbody = esc($_POST['postbody']);
+    $topic = esc($_POST['topic']);
+    if (isset($_POST['published'])) {
+        $published = intval(esc($_POST['published']));
+    }
+
+    $editingUserId = intval($_SESSION['user']['id']);
+
+    // walidacja formularza
+    if (empty($title)) { array_push($posterrors, "Nie podano tytułu"); }
+    if (empty($slug)) { array_push($posterrors, "Nie podano sluga"); }
+    if (empty($short)) { array_push($posterrors, "Nie podano krótkiego opisu"); }
+    if (empty($postbody)) { array_push($posterrors, "Nie wpisano treści"); }
+    if (!in_array($topic, getTopicIds() )) { array_push($posterrors, "Temat nie istnieje");}
+
+    // czy nie był już opublkoiwany
+    $sql = "SELECT * FROM topics WHERE slug='$slug'";
+
+    $result = mysqli_query($conn, $sql);
+    $postedBefore = mysqli_fetch_assoc($result);
+
+    if ($postedBefore) {
+        array_push($posterrors, "Post o takim slugu już istnieje");
+    }
+    
+    //publikowanie do bazy
+    if (count($posterrors) == 0) {
+        $query = "INSERT INTO posts (user_id, title, slug, short, body, published, created_at, updated_at) 
+                  VALUES($editingUserId, '$title', '$slug', '$short', '$postbody', $published, now(), now())";
+        mysqli_query($conn, $query);
+        $inserted_post_id = mysqli_insert_id($conn);
+        $query = "INSERT INTO post_topic (post_id, topic_id) 
+                  VALUES($inserted_post_id, $topic)";
+        mysqli_query($conn, $query);
+
+        header('location: panel.php?akcja=posts&add=1');
+        exit(0);
+    }
+}
+// usuń post
+function deletePost($id) {
+	global $conn;
+    $sql = "DELETE FROM posts WHERE id=$id";
+    mysqli_query($conn, $sql);
+    $sql = "DELETE FROM post_topic WHERE post_id=$id";
+    mysqli_query($conn, $sql);
+    header('location: panel.php?akcja=posts');
+    exit(0);
+}
+// weź edytowany post
+function getEditedPost($id) {
+	global $conn;
+	$sql = "SELECT * FROM posts WHERE id=$id";
+    $result = mysqli_query($conn, $sql);
+    $post = mysqli_fetch_assoc($result);
+
+	$sql = "SELECT topic_id FROM post_topic WHERE post_id=$id";
+    $result = mysqli_query($conn, $sql);
+    $topic_id = mysqli_fetch_assoc($result);
+    $topic_id = $topic_id['topic_id'];
+    
+    $post['topic_id'] = intval($topic_id);
+	return $post;
 }
