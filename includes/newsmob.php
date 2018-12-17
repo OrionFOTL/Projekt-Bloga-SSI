@@ -1,3 +1,5 @@
+<?php require_once( ROOT_PATH . '/includes/general_functions.php') ?>
+<?php $posts = getPublishedPosts(); ?>
 <div id="newsmob">
 				<h1>Najnowsze artykuły</h1>
 				<ul>
