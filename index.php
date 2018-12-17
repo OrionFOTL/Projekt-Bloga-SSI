@@ -23,7 +23,7 @@
 					<div class="newsitem">
 						<!-- obrazek tematu -->
 						<a href="tematy.php?topic=<?php echo $post['topic']['slug']; ?>">
-							<span class="obrazek poprawej"><img src="<?php echo BASE_URL . 'static/media/' . $post['topic']['slug']; ?>" alt="IMG" /></span>
+							<span class="obrazek poprawej"><img src="<?php echo BASE_URL . 'static/media/' . $post['topic']['slug'] . '.png'; ?>" alt="IMG" /></span>
 						</a>
 						<!-- Tytuł -->
 						<a href="post.php?post-slug=<?php echo $post['slug']; ?>">
