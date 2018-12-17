@@ -9,5 +9,5 @@
 	}
 
 	define ('ROOT_PATH', realpath(dirname(__FILE__)));
-	define('BASE_URL', 'http://localhost/blogSSI/');
+	define('BASE_URL', 'https://blogssi.000webhostapp.com/');
 ?>
