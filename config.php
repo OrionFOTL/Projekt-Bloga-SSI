@@ -1,6 +1,4 @@
 <?php 
-	session_start();
-
 	$conn = mysqli_connect("localhost", "id8254169_root", "KTpm)4mNY2b2Cnqnixk$", "id8254169_blogssi");
     $conn->set_charset("utf8");
 
