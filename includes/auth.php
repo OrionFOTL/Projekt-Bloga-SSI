@@ -74,7 +74,6 @@
             $sql = "SELECT * FROM users WHERE username='$login'";
             $query = mysqli_query($conn, $sql);
             $user = mysqli_fetch_assoc($query);
-            var_dump($user);
             
             //sprawdzenie czy haslo w formularzu logowania zgadza sie z hashem usera
             $valid = password_verify($password, $user['password']);
