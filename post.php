@@ -8,6 +8,9 @@
 	}
 	if (isset($_SESSION['user'])) $userRole = $_SESSION['user']['role'];
 	else $userRole = 'Anon';
+	if (isset($_GET['delete-comment']) && $userRole == 'Admin') {
+		deleteComment($_GET['delete-comment']);
+	}
 ?>
 
 <!-- layout -->
@@ -41,6 +44,7 @@
 				</div>
 				<div id="comments">
 					<hr>
+					<h2>Komentarze:</h2>
 					<?php if ($comments == null) : ?>
 						<h3>Brak komentarzy</h3>
 					<?php else: ?>
@@ -50,6 +54,11 @@
 									<span class="commentAuthor"><?php echo $comment['author'] ?></span>
 									<span class="commentAuthorDivider">|</span>
 									<span class="commentDate">Napisany o <?php echo date('H:i j.m.y', strtotime($comment["created_on"])); ?></span>
+									<span class="deleteComment">
+										<?php if($userRole == 'Admin') { ?> 
+											<a href="post.php?post-slug=<?php echo $post['slug']?>&delete-comment=<?php echo $comment['id']?>">X</a>
+										<?php } ?>
+									</span>
 								</div>
 								<div class="commentBody">
 									<p><?php echo $comment['body'] ?></p>

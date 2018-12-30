@@ -105,4 +105,10 @@ function getCommentsForPost($post_id) {
 	$comments = mysqli_fetch_all($result, MYSQLI_ASSOC);
 	return $comments;
 }
+function deleteComment($comment_id){
+	global $conn;
+    $sql = "DELETE FROM comments WHERE id=$comment_id";
+    mysqli_query($conn, $sql);
+	header('location: post.php?post-slug='.$_GET['post-slug']);
+}
 ?>
