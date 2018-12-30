@@ -137,15 +137,6 @@ function getAllPosts() {
     $posts = mysqli_fetch_all($result, MYSQLI_ASSOC);
 	return $posts;
 }
-function getAllTopics() {
-    global $conn;
-    $topics = Array();
-	$sql = "SELECT * FROM topics";
-    $result = mysqli_query($conn, $sql);
-    
-    $topics = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    return $topics;
-}
 function getTopicIds() {
     global $conn;
     $topic_names = Array();

@@ -1,4 +1,3 @@
-﻿<!-- przygotowanie, konfiguracja -->
 <?php require_once('config.php') ?>
 <?php require_once( ROOT_PATH . '/includes/general_functions.php') ?>
 <?php require_once( ROOT_PATH . '/includes/auth.php') ?>

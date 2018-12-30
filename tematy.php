@@ -1,4 +1,3 @@
-<!-- przygotowanie, konfiguracja -->
 <?php require_once('config.php') ?>
 <?php require_once( ROOT_PATH . '/includes/general_functions.php') ?>
 <?php require_once( ROOT_PATH . '/includes/auth.php') ?>
@@ -12,7 +11,7 @@
 
 <!-- layout -->
 <?php require_once(ROOT_PATH . '/includes/header.php') ?>
-	<title>Posty typu <?php echo getTopicNameBySlug($topic_slug); ?></title>
+	<title><?php echo (isset($_GET['topic']) ? "Posty typu ".getTopicNameBySlug($topic_slug) : "Lista tematów"); ?></title>
 </head>
 
 <body>

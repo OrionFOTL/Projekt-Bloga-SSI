@@ -39,9 +39,10 @@
 		//faktyczna rejestracja
 		if (count($regerrors) == 0) {
 			$password = password_hash($password_1, PASSWORD_DEFAULT);  //szyfrowanie hasla
-			$query = "INSERT INTO users (username, email, password, created_at, updated_at) 
-					  VALUES('$login', '$email', '$password', now(), now())";
-			mysqli_query($conn, $query);
+			$query = "INSERT INTO users (username, email, role, password, created_at, updated_at) 
+					  VALUES('$login', '$email', 'User' '$password', now(), now())";
+			
+			var_dump(mysqli_query($conn, $query));
 
             //zaloguj od razu
 			$reg_user_id = mysqli_insert_id($conn); 
@@ -105,5 +106,12 @@
 		$val = mysqli_real_escape_string($conn, $value);
 
 		return $val;
+	}
+	function getUserById($id) {
+		global $conn;
+		$sql = "SELECT * FROM users WHERE id=$id";
+		$result = mysqli_query($conn, $sql);
+		$user = mysqli_fetch_assoc($result);
+		return $user;
 	}
 ?>

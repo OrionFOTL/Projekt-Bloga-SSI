@@ -1,9 +1,7 @@
-<!-- przygotowanie, konfiguracja -->
 <?php require_once( '../config.php') ?>
 <?php require_once( ROOT_PATH . '/includes/auth.php') ?>
+<?php require_once( ROOT_PATH . '/includes/general_functions.php') ?>
 <?php require_once( ROOT_PATH . '/admin/includes/admin_functions.php') ?>
-
-<!-- wywal jeśli nie-admin tu wejdzie -->
 <?php if($_SESSION['user']['role'] != 'Admin')
         header('location: ' . BASE_URL . 'index.php');
 ?>
