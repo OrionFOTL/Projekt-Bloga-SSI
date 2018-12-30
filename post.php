@@ -4,9 +4,10 @@
 <?php 
 	if (isset($_GET['post-slug'])) {
 		$post = getPost($_GET['post-slug']);
+		$comments = getCommentsForPost($post['id']);
 	}
 	if (isset($_SESSION['user'])) $userRole = $_SESSION['user']['role'];
-	else $userRole = 'User';
+	else $userRole = 'Anon';
 ?>
 
 <!-- layout -->
@@ -26,16 +27,45 @@
 		<?php include(ROOT_PATH . '/includes/newsmob.php') ?>
 		<div id="mainwrapper"> 	  
 			<div id="main">
-                <?php if (isset($_GET['post-slug'])): ?>
-                    <?php if ($post['published'] == false && $userRole != 'Admin'): ?>
-				        <h2>Ten post nie został jeszcze opublikowany!</h2>
-			        <?php else: ?>
-                        <h1><?php echo $post['title']; ?></h1>
-                        <?php echo html_entity_decode($post['body']); ?>
-			         <?php endif ?>
-                <?php else: ?>
-                    <h1>Błąd - nie wybrano żadnego posta, wróć do listy postów!</h1>
-				<?php endif ?>
+				<div id="post">
+					<?php if (isset($_GET['post-slug'])): ?>
+						<?php if ($post['published'] == false && $userRole != 'Admin'): ?>
+							<h2>Ten post nie został jeszcze opublikowany!</h2>
+						<?php else: ?>
+							<h1><?php echo $post['title']; ?></h1>
+							<?php echo html_entity_decode($post['body']); ?>
+						<?php endif ?>
+					<?php else: ?>
+						<h1>Błąd - nie wybrano żadnego posta, wróć do listy postów!</h1>
+					<?php endif ?>
+				</div>
+				<div id="comments">
+					<hr>
+					<?php if ($comments == null) : ?>
+						<h3>Brak komentarzy</h3>
+					<?php else: ?>
+						<?php foreach ($comments as $comment): ?>
+							<div class="comment">
+								<div class="commentAuthorWrap">
+									<span class="commentAuthor"><?php echo $comment['author'] ?></span>
+									<span class="commentAuthorDivider">|</span>
+									<span class="commentDate">Napisany o <?php echo date('H:i j.m.y', strtotime($comment["created_on"])); ?></span>
+								</div>
+								<div class="commentBody">
+									<p><?php echo $comment['body'] ?></p>
+								</div>
+							</div>
+						<?php endforeach ?>
+					<?php endif ?>
+					<div id="addComment">
+						<h3>Dodaj komentarz jako #USER</h3>
+						<form class="reg" method="post" action="" >
+							<!-- pola do wypełnienia -->
+							<textarea name="commentbody" id="commentbody" cols="30" rows="10" required></textarea>
+							<button type="submit" class="" name="post_comment">Dodaj</button>
+						</form>
+					</div>
+				</div>
 			</div>
 		</div>
 		<!-- lewy i prawy sidebar -->

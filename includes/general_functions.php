@@ -95,4 +95,14 @@ function getPost($slug){
 	}
 	return $post;
 }
+/* * * * * * * * * * * * * * *
+* Komentarze
+* * * * * * * * * * * * * * */
+function getCommentsForPost($post_id) {
+	global $conn;
+	$sql = "SELECT * FROM comments WHERE post_id=$post_id";
+	$result = mysqli_query($conn, $sql);
+	$comments = mysqli_fetch_all($result, MYSQLI_ASSOC);
+	return $comments;
+}
 ?>
