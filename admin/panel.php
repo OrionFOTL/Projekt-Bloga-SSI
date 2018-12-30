@@ -2,11 +2,10 @@
 <?php require_once( ROOT_PATH . '/includes/auth.php') ?>
 <?php require_once( ROOT_PATH . '/includes/general_functions.php') ?>
 <?php require_once( ROOT_PATH . '/admin/includes/admin_functions.php') ?>
-<?php if($_SESSION['user']['role'] != 'Admin')
-        header('location: ' . BASE_URL . 'index.php');
+<?php 
+    if($_SESSION['user']['role'] != 'Admin') header('location: ' . BASE_URL . 'index.php');
+    if (isset($_GET['delete'])) deletePost($_GET['delete']);
 ?>
-
-<!-- layout -->
 <?php require_once(ROOT_PATH . '/includes/header.php') ?>
 	<title>Panel administracyjny</title>
 </head>
