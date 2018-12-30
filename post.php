@@ -1,10 +1,11 @@
 <?php require_once('config.php') ?>
-<?php require_once( ROOT_PATH . '/includes/general_functions.php') ?>
 <?php require_once( ROOT_PATH . '/includes/auth.php') ?>
+<?php require_once( ROOT_PATH . '/includes/general_functions.php') ?>
 <?php 
 	if (isset($_GET['post-slug'])) {
 		$post = getPost($_GET['post-slug']);
 		$comments = getCommentsForPost($post['id']);
+		$_SESSION['post'] = $post;
 	}
 	if (isset($_SESSION['user'])) $userRole = $_SESSION['user']['role'];
 	else $userRole = 'Anon';
@@ -67,12 +68,16 @@
 						<?php endforeach ?>
 					<?php endif ?>
 					<div id="addComment">
-						<h3>Dodaj komentarz jako #USER</h3>
-						<form class="reg" method="post" action="" >
-							<!-- pola do wypełnienia -->
-							<textarea name="commentbody" id="commentbody" cols="30" rows="10" required></textarea>
-							<button type="submit" class="" name="post_comment">Dodaj</button>
-						</form>
+						<?php if ($userRole == 'Anon') : ?>
+							<h3>Tylko zalogowani użytkownicy mogą dodawać komentarze.</h3>
+						<?php else : ?>
+							<h3>Dodaj komentarz jako <?php echo $_SESSION['user']['username'] ?></h3>
+							<form class="reg" method="post" action="" >
+								<!-- pola do wypełnienia -->
+								<textarea name="commentbody" id="commentbody" cols="30" rows="10" required></textarea>
+								<button type="submit" class="" name="post_comment">Dodaj</button>
+							</form>
+						<?php endif ?>
 					</div>
 				</div>
 			</div>

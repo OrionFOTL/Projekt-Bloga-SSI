@@ -111,4 +111,15 @@ function deleteComment($comment_id){
     mysqli_query($conn, $sql);
 	header('location: post.php?post-slug='.$_GET['post-slug']);
 }
+if (isset($_POST['post_comment'])) {
+
+	$post_id = $_SESSION['post']['id'];
+	$username = $_SESSION['user']['username'];
+	$commentbody = esc($_POST['commentbody']);
+
+	$query = "INSERT INTO comments (post_id, author, body, created_on) 
+			  VALUES($post_id, '$username', '$commentbody', now())";
+	mysqli_query($conn, $query);
+	header('location: post.php?post-slug='.$_SESSION['post']['slug']);
+}
 ?>

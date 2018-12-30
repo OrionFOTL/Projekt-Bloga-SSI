@@ -1,5 +1,5 @@
 		<div id="psu">
-            <form action="<?php echo BASE_URL . 'index.php' ?>" method="post" >
+            <form method="post" >
                 <ul class="menu">
                     <?php if (isset($_SESSION['user']['username'])): ?>
                         <li class="element">Witaj <?php echo $_SESSION['user']['username'] ?>!</li>

@@ -76,11 +76,13 @@ if (isset($_POST['admin_edit'])) {
 }
  //Usuwanie użytkownika
 function deleteUser($id) {
-	global $conn;
-    $sql = "DELETE FROM users WHERE id=$id";
-    mysqli_query($conn, $sql);
-    header('location: panel.php?akcja=users');
-    exit(0);
+    if ($_SESSION['user']['role'] == 'Admin') {
+        global $conn;
+        $sql = "DELETE FROM users WHERE id=$id";
+        mysqli_query($conn, $sql);
+        header('location: panel.php?akcja=users');
+        exit(0);
+    }
 }
 
 //weź wszystkich użytkowników do tablicy asocjacyjnej
@@ -250,13 +252,15 @@ if (isset($_POST['edit_post'])) {
 }
 // usuń post
 function deletePost($id) {
-	global $conn;
-    $sql = "DELETE FROM posts WHERE id=$id";
-    mysqli_query($conn, $sql);
-    $sql = "DELETE FROM post_topic WHERE post_id=$id";
-    mysqli_query($conn, $sql);
-    header('location: panel.php?akcja=posts');
-    exit(0);
+    if ($_SESSION['user']['role'] == 'Admin') {
+        global $conn;
+        $sql = "DELETE FROM posts WHERE id=$id";
+        mysqli_query($conn, $sql);
+        $sql = "DELETE FROM post_topic WHERE post_id=$id";
+        mysqli_query($conn, $sql);
+        header('location: panel.php?akcja=posts');
+        exit(0);
+    }
 }
 // weź edytowany post
 function getEditedPost($id) {
