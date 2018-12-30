@@ -40,7 +40,7 @@
 		if (count($regerrors) == 0) {
 			$password = password_hash($password_1, PASSWORD_DEFAULT);  //szyfrowanie hasla
 			$query = "INSERT INTO users (username, email, role, password, created_at, updated_at) 
-					  VALUES('$login', '$email', 'User' '$password', now(), now())";
+					  VALUES('$login', '$email', 'User', '$password', now(), now())";
 			mysqli_query($conn, $query);
 
             //zaloguj od razu

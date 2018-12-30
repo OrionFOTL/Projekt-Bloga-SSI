@@ -5,6 +5,8 @@
 	if (isset($_GET['post-slug'])) {
 		$post = getPost($_GET['post-slug']);
 	}
+	if (isset($_SESSION['user'])) $userRole = $_SESSION['user']['role'];
+	else $userRole = 'User';
 ?>
 
 <!-- layout -->
@@ -25,7 +27,7 @@
 		<div id="mainwrapper"> 	  
 			<div id="main">
                 <?php if (isset($_GET['post-slug'])): ?>
-                    <?php if ($post['published'] == false): ?>
+                    <?php if ($post['published'] == false && $userRole != 'Admin'): ?>
 				        <h2>Ten post nie został jeszcze opublikowany!</h2>
 			        <?php else: ?>
                         <h1><?php echo $post['title']; ?></h1>

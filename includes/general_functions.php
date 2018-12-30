@@ -41,7 +41,7 @@ function getPublicPostsFromTopicSlug($topic_slug) {
                     SELECT t.id FROM topics t WHERE t.slug ='$topic_slug'
                     )
                 GROUP BY pt.post_id
-                )";
+                ) AND p.published = 1";
 	$result = mysqli_query($conn, $sql);
     
     //wrzuc posty do tablicy asoc.
@@ -86,7 +86,7 @@ function getAllTopics() {
 function getPost($slug){
 	global $conn;
 	
-	$sql = "SELECT * FROM posts WHERE slug='$slug' AND published=true";
+	$sql = "SELECT * FROM posts WHERE slug='$slug'";
 	$result = mysqli_query($conn, $sql);
 
 	$post = mysqli_fetch_assoc($result);
