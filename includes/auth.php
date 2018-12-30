@@ -41,8 +41,7 @@
 			$password = password_hash($password_1, PASSWORD_DEFAULT);  //szyfrowanie hasla
 			$query = "INSERT INTO users (username, email, role, password, created_at, updated_at) 
 					  VALUES('$login', '$email', 'User' '$password', now(), now())";
-			
-			var_dump(mysqli_query($conn, $query));
+			mysqli_query($conn, $query);
 
             //zaloguj od razu
 			$reg_user_id = mysqli_insert_id($conn); 
