@@ -36,7 +36,7 @@
                     <td><?php if($post['published']) echo '✓'; else echo '✗' ?></td>
                     <td><?php echo $post['created_at'] ?></td>
                     <td><a class="edit action" href="panel.php?akcja=posts&edit=<?php echo $post['id'] ?>">Edytuj</a></td>
-                    <td><a class="delete action" href="panel.php?akcja=posts&delete=<?php echo $post['id'] ?>">Usuń</a></td>
+                    <td><a class="delete action" href="panel.php?akcja=posts&deletePost=<?php echo $post['id'] ?>">Usuń</a></td>
                 </tr>
             <?php endforeach ?>
                 <tr>

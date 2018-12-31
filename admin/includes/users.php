@@ -1,7 +1,7 @@
 <?php
     $users = getAllUsers();
     $roles = getAllRoles();
-    if (isset($_GET['delete'])) deleteUser($_GET['delete']);
+    if (isset($_GET['deleteUser'])) deleteUser($_GET['deleteUser']);
 ?>
 
 <div>
@@ -28,7 +28,7 @@
                     <td><?php echo $user['email'] ?></td>
                     <td><?php echo $user['role'] ?></td>
                     <td><a class="edit action" href="panel.php?akcja=users&edit=<?php echo $user['id'] ?>">Edytuj</a></td>
-                    <td><a class="delete action" href="panel.php?akcja=users&delete=<?php echo $user['id'] ?>">Usuń</a></td>
+                    <td><a class="delete action" href="panel.php?akcja=users&deleteUser=<?php echo $user['id'] ?>">Usuń</a></td>
                 </tr>
             <?php endforeach ?>
                 <tr>
