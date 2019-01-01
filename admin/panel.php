@@ -5,6 +5,7 @@
 <?php 
     if($_SESSION['user']['role'] != 'Admin') header('location: ' . BASE_URL . 'index.php');
     if (isset($_GET['deletePost'])) deletePost($_GET['deletePost']);
+    if (isset($_GET['deleteUser'])) deleteUser($_GET['deleteUser']);
 ?>
 <?php require_once(ROOT_PATH . '/includes/header.php') ?>
 	<title>Panel administracyjny</title>
