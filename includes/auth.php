@@ -3,7 +3,6 @@
 	$email    = "";
     $regerrors = array(); 
 	$logerrors = array();
-	$correctImg;
 
     /* * * * * * * * * * * * * * * *
     * Rejestracja
@@ -15,12 +14,16 @@
 		$email = esc($_POST['email']);
 		$password_1 = esc($_POST['password_1']);
 		$password_2 = esc($_POST['password_2']);
+		$correctImg = intval($_SESSION['correctImg']);
+		$inputImg = intval(esc($_POST['captcha']))-1;
 
 		// walidacja formularza
 		if (empty($login)) { array_push($regerrors, "Nie podano loginu"); }
 		if (empty($email)) { array_push($regerrors, "Nie podano emaila"); }
 		if (empty($password_1)) { array_push($regerrors, "Nie podano hasła"); }
 		if ($password_1 != $password_2) { array_push($regerrors, "Hasła do siebie nie pasują");}
+		if (empty($inputImg)) { array_push($regerrors, "Nie uzupełniono Captcha"); }
+		if ($inputImg != $correctImg) { array_push($regerrors, "Nieprawidłowa Captcha"); }
 
 		// czy nie był już zarejestrowany
 		$sql = "SELECT * FROM users WHERE username='$login' OR email='$email'";
@@ -117,6 +120,7 @@
 	
 	function generateCaptcha(){
 		$correctImg = rand(0,8);
+		$_SESSION['correctImg'] = $correctImg;
 
 		for ($i=0; $i < 9; $i++) { 
 			echo "<img src=\"data:image/jpeg;base64, " . generateImage($i, $correctImg) . "\" />";
