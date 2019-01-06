@@ -30,6 +30,7 @@
                     <input type="email" name="email" value="<?php echo $email ?>" placeholder="Email" required>
                     <input type="password" name="password_1" placeholder="Hasło" required>
                     <input type="password" name="password_2" placeholder="Powtórz hasło" required>
+					<?php generateCaptcha(); ?>
                     <button type="submit" class="" name="register">Zarejestruj</button>
                 </form>
 			</div>

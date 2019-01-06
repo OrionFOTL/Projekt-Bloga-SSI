@@ -2,7 +2,8 @@
 	$login = "";
 	$email    = "";
     $regerrors = array(); 
-    $logerrors = array();
+	$logerrors = array();
+	$correctImg;
 
     /* * * * * * * * * * * * * * * *
     * Rejestracja
@@ -112,5 +113,33 @@
 		$result = mysqli_query($conn, $sql);
 		$user = mysqli_fetch_assoc($result);
 		return $user;
+	}
+	
+	function generateCaptcha(){
+		$correctImg = rand(0,8);
+
+		for ($i=0; $i < 9; $i++) { 
+			echo "<img src=\"data:image/jpeg;base64, " . generateImage($i, $correctImg) . "\" />";
+		}
+		
+
+	}
+
+	function generateImage($number, $correctImg) {
+		$image = imagecreate( 50, 50 );
+		$background = imagecolorallocate( $image, rand(0,255), rand(0,255), rand(0,255) );
+		$text_colour = imagecolorallocate( $image, 255, 255, 0 );
+		$fill_colour = imagecolorallocate( $image, rand(0,255), rand(0,255), rand(0,255) );
+		if ($number == $correctImg) imagefilledellipse ( $image, 25, 25, 30, 30, $fill_colour );
+		else imagefilledpolygon ( $image , [10,40,25,10,40,40] , 3 , $fill_colour );
+		imagestring( $image, 4, 5, 5, (String)$number+1, $text_colour );
+
+		ob_start();
+		imagejpeg($image);
+		$image_data = ob_get_contents();
+		ob_end_clean();
+
+		$image_base64 = base64_encode($image_data);
+		return $image_base64;
 	}
 ?>
