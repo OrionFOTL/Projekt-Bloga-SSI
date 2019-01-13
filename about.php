@@ -17,7 +17,8 @@
 		<?php include(ROOT_PATH . '/includes/newsmob.php') ?>
 		<div id="mainwrapper"> 	  
 			<div id="main">
-				<p>Tu będzie formularz kontaktowy</p>
+				<h1>Hardware Blog</h1>
+				<p>Strona gdzie publikujemy informacje na temat sprzętu komputerowego, recenzje, oraz przecieki z branży.</p>
 			</div>
 		</div>
 		<!-- lewy i prawy sidebar -->
