@@ -3,7 +3,7 @@
 <?php require_once( ROOT_PATH . '/includes/auth.php') ?>
 <?php $posts = getPublishedPosts(); ?>
 
-<!-- layout -->
+<!-- layoutsss -->
 <?php require_once(ROOT_PATH . '/includes/header.php') ?>
 	<title>Blog o sprzęcie</title>
 </head>
