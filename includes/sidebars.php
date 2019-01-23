@@ -3,7 +3,7 @@
 			<h1>Najnowsze artykuły</h1>
 			<ul>
 				<?php foreach ($posts as $post): ?>
-				<li><a href="post.php?post-slug=<?php echo $post['slug']; ?>"><?php echo $post['title']; ?></a></li>
+				<li><a href="<?php echo BASE_URL . 'post.php?post-slug=' . $post['slug'] ?>"><?php echo $post['title']; ?></a></li>
 				<?php endforeach ?>
 			</ul>
 		</div>	    

@@ -1,4 +1,3 @@
-<!-- przygotowanie, konfiguracja -->
 <?php require_once('config.php') ?>
 <?php require_once( ROOT_PATH . '/includes/general_functions.php') ?>
 <?php require_once( ROOT_PATH . '/includes/auth.php') ?>
@@ -12,7 +11,7 @@
 
 <!-- layout -->
 <?php require_once(ROOT_PATH . '/includes/header.php') ?>
-	<title>Posty typu <?php echo getTopicNameBySlug($topic_slug); ?></title>
+	<title><?php echo (isset($_GET['topic']) ? "Posty typu ".getTopicNameBySlug($topic_slug) : "Lista tematów"); ?></title>
 </head>
 
 <body>
@@ -34,13 +33,13 @@
 								<span class="obrazek poprawej"><img src="<?php echo BASE_URL . 'static/media/' . $post['topic']['slug']. '.png'; ?>" alt="IMG" /></span>
 							</a>
 							<!-- Tytuł -->
-							<a href="single_post.php?post-slug=<?php echo $post['slug']; ?>">
+							<a href="post.php?post-slug=<?php echo $post['slug']; ?>">
 								<h1><?php echo $post['title'] ?></h1>
 							</a>
 							<!-- Krótki opis i link -->
 							<p>
 								<?php echo $post['short'] ?>
-								<a href="single_post.php?post-slug=<?php echo $post['slug']; ?>">Czytaj dalej...</a>
+								<a href="post.php?post-slug=<?php echo $post['slug']; ?>">Czytaj dalej...</a>
 							</p>
 							<div class="newsfooter"><p>Napisany <?php echo date('j.m.y', strtotime($post["created_at"])); ?></p></div>
 						</div>

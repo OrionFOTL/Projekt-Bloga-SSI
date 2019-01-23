@@ -76,11 +76,13 @@ if (isset($_POST['admin_edit'])) {
 }
  //Usuwanie użytkownika
 function deleteUser($id) {
-	global $conn;
-    $sql = "DELETE FROM users WHERE id=$id";
-    mysqli_query($conn, $sql);
-    header('location: panel.php?akcja=users');
-    exit(0);
+    if ($_SESSION['user']['role'] == 'Admin') {
+        global $conn;
+        $sql = "DELETE FROM users WHERE id=$id";
+        mysqli_query($conn, $sql);
+        header('location: panel.php?akcja=users');
+        exit(0);
+    }
 }
 
 //weź wszystkich użytkowników do tablicy asocjacyjnej
@@ -136,15 +138,6 @@ function getAllPosts() {
     
     $posts = mysqli_fetch_all($result, MYSQLI_ASSOC);
 	return $posts;
-}
-function getAllTopics() {
-    global $conn;
-    $topics = Array();
-	$sql = "SELECT * FROM topics";
-    $result = mysqli_query($conn, $sql);
-    
-    $topics = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    return $topics;
 }
 function getTopicIds() {
     global $conn;
@@ -218,13 +211,14 @@ if (isset($_POST['add_post'])) {
     }
 }
 // edytowanie postow
-if (isset($_POST['add_post'])) {
+if (isset($_POST['edit_post'])) {
     $title = "";
     $slug = "";
     $short = "";
     $postbody = "";
     $published = 0;
 
+    $id = $_POST['id'];
     $title = esc($_POST['title']);
     $slug = esc($_POST['slug']);
     $short = esc($_POST['short']);
@@ -242,40 +236,31 @@ if (isset($_POST['add_post'])) {
     if (empty($short)) { array_push($posterrors, "Nie podano krótkiego opisu"); }
     if (empty($postbody)) { array_push($posterrors, "Nie wpisano treści"); }
     if (!in_array($topic, getTopicIds() )) { array_push($posterrors, "Temat nie istnieje");}
-
-    // czy nie był już opublkoiwany
-    $sql = "SELECT * FROM topics WHERE slug='$slug'";
-
-    $result = mysqli_query($conn, $sql);
-    $postedBefore = mysqli_fetch_assoc($result);
-
-    if ($postedBefore) {
-        array_push($posterrors, "Post o takim slugu już istnieje");
-    }
     
     //publikowanie do bazy
     if (count($posterrors) == 0) {
-        $query = "INSERT INTO posts (user_id, title, slug, short, body, published, created_at, updated_at) 
-                  VALUES($editingUserId, '$title', '$slug', '$short', '$postbody', $published, now(), now())";
+        $query = "UPDATE posts SET title='$title', slug='$slug', short='$short', body='$postbody', published=$published,
+                  updated_at=now() WHERE id=$id";
         mysqli_query($conn, $query);
-        $inserted_post_id = mysqli_insert_id($conn);
-        $query = "INSERT INTO post_topic (post_id, topic_id) 
-                  VALUES($inserted_post_id, $topic)";
+        $query = "UPDATE post_topic SET topic_id=$topic
+                  WHERE post_id=$id";
         mysqli_query($conn, $query);
 
-        header('location: panel.php?akcja=posts&add=1');
+        header('location: panel.php?akcja=posts');
         exit(0);
     }
 }
 // usuń post
 function deletePost($id) {
-	global $conn;
-    $sql = "DELETE FROM posts WHERE id=$id";
-    mysqli_query($conn, $sql);
-    $sql = "DELETE FROM post_topic WHERE post_id=$id";
-    mysqli_query($conn, $sql);
-    header('location: panel.php?akcja=posts');
-    exit(0);
+    if ($_SESSION['user']['role'] == 'Admin') {
+        global $conn;
+        $sql = "DELETE FROM posts WHERE id=$id";
+        mysqli_query($conn, $sql);
+        $sql = "DELETE FROM post_topic WHERE post_id=$id";
+        mysqli_query($conn, $sql);
+        header('location: panel.php?akcja=posts');
+        exit(0);
+    }
 }
 // weź edytowany post
 function getEditedPost($id) {

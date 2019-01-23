@@ -41,7 +41,7 @@ function getPublicPostsFromTopicSlug($topic_slug) {
                     SELECT t.id FROM topics t WHERE t.slug ='$topic_slug'
                     )
                 GROUP BY pt.post_id
-                )";
+                ) AND p.published = 1";
 	$result = mysqli_query($conn, $sql);
     
     //wrzuc posty do tablicy asoc.
@@ -86,7 +86,7 @@ function getAllTopics() {
 function getPost($slug){
 	global $conn;
 	
-	$sql = "SELECT * FROM posts WHERE slug='$slug' AND published=true";
+	$sql = "SELECT * FROM posts WHERE slug='$slug'";
 	$result = mysqli_query($conn, $sql);
 
 	$post = mysqli_fetch_assoc($result);
@@ -94,5 +94,32 @@ function getPost($slug){
 		$post['topic'] = getPostTopic($post['id']);
 	}
 	return $post;
+}
+/* * * * * * * * * * * * * * *
+* Komentarze
+* * * * * * * * * * * * * * */
+function getCommentsForPost($post_id) {
+	global $conn;
+	$sql = "SELECT * FROM comments WHERE post_id=$post_id";
+	$result = mysqli_query($conn, $sql);
+	$comments = mysqli_fetch_all($result, MYSQLI_ASSOC);
+	return $comments;
+}
+function deleteComment($comment_id){
+	global $conn;
+    $sql = "DELETE FROM comments WHERE id=$comment_id";
+    mysqli_query($conn, $sql);
+	header('location: post.php?post-slug='.$_GET['post-slug']);
+}
+if (isset($_POST['post_comment'])) {
+
+	$post_id = $_SESSION['post']['id'];
+	$username = $_SESSION['user']['username'];
+	$commentbody = esc($_POST['commentbody']);
+
+	$query = "INSERT INTO comments (post_id, author, body, created_on) 
+			  VALUES($post_id, '$username', '$commentbody', now())";
+	mysqli_query($conn, $query);
+	header('location: post.php?post-slug='.$_SESSION['post']['slug']);
 }
 ?>

@@ -1,4 +1,3 @@
-<!-- przygotowanie, konfiguracja -->
 <?php require_once('config.php') ?>
 <?php require_once( ROOT_PATH . '/includes/auth.php') ?>
 
@@ -31,6 +30,9 @@
                     <input type="email" name="email" value="<?php echo $email ?>" placeholder="Email" required>
                     <input type="password" name="password_1" placeholder="Hasło" required>
                     <input type="password" name="password_2" placeholder="Powtórz hasło" required>
+					<?php generateCaptcha(); ?>
+					<p>Wpisz cyfrę z obrazka na którym jest okrągła figura:</p>
+					<input type="text" name="captcha" placeholder="" required>
                     <button type="submit" class="" name="register">Zarejestruj</button>
                 </form>
 			</div>

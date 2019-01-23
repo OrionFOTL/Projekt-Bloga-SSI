@@ -1,14 +1,12 @@
-<!-- przygotowanie, konfiguracja -->
 <?php require_once( '../config.php') ?>
 <?php require_once( ROOT_PATH . '/includes/auth.php') ?>
+<?php require_once( ROOT_PATH . '/includes/general_functions.php') ?>
 <?php require_once( ROOT_PATH . '/admin/includes/admin_functions.php') ?>
-
-<!-- wywal jeśli nie-admin tu wejdzie -->
-<?php if($_SESSION['user']['role'] != 'Admin')
-        header('location: ' . BASE_URL . 'index.php');
+<?php 
+    if($_SESSION['user']['role'] != 'Admin') header('location: ' . BASE_URL . 'index.php');
+    if (isset($_GET['deletePost'])) deletePost($_GET['deletePost']);
+    if (isset($_GET['deleteUser'])) deleteUser($_GET['deleteUser']);
 ?>
-
-<!-- layout -->
 <?php require_once(ROOT_PATH . '/includes/header.php') ?>
 	<title>Panel administracyjny</title>
 </head>
@@ -42,16 +40,6 @@
                 </div>
                 <?php if (isset($_GET['akcja'])): ?>
                     <?php if ($_GET['akcja'] == "posts") include('includes/posts.php') ?>
-                <?php endif ?>
-                <!-- Komentarze -->
-                <div class="newsitem">
-                    <a href="panel.php?akcja=comments">
-                        <h1>Zarządzanie komentarzami</h1>
-                    </a>
-                    <p> napisanych komentarzy</p>
-                </div>
-                <?php if (isset($_GET['akcja'])): ?>
-                    <?php if ($_GET['akcja'] == "comments") echo "witaj" ?>
                 <?php endif ?>
 			</div>
 		</div>
